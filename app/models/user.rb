@@ -5,4 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :blogs, inverse_of: :user, dependent: :destroy
+  has_many :posts, through: :blogs
 end
