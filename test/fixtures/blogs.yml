@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+alice:
+  id: 1
+  title: Alice's Blog
+  user_id: 1
+
+bob:
+  id: 2
+  title: Bob's Blog
+  user_id: 2
