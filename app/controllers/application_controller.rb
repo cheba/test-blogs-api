@@ -8,4 +8,8 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     render json: { errors: [exception.message] }, status: 401
   end
+
+  rescue_from ActiveRecord::RecordNotFound do |exception|
+    render json: { errors: [exception.message] }, status: 404
+  end
 end
