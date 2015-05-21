@@ -1,6 +1,8 @@
 class PostsController < ApplicationController
   def index
-    posts = Post.all
+    posts = Post.accessible_by(current_ability, :read)
+
+    authorize! :read, posts
 
     respond_to do |format|
       format.json { render json: posts }
@@ -10,6 +12,8 @@ class PostsController < ApplicationController
   def show
     post = Post.find(params[:id])
 
+    authorize! :read, post
+
     respond_to do |format|
       format.json { render json: post }
     end
@@ -17,6 +21,8 @@ class PostsController < ApplicationController
 
   def create
     post = Post.new(post_params)
+
+    authorize! :create, post
 
     respond_to do |format|
       format.json do
@@ -32,6 +38,8 @@ class PostsController < ApplicationController
   def update
     post = Post.find(params[:id])
 
+    authorize! :update, post
+
     respond_to do |format|
       format.json do
         if post.update_attributes(post_params)
@@ -45,6 +53,8 @@ class PostsController < ApplicationController
 
   def destroy
     post = Post.find(params[:id])
+
+    authorize! :destroy, post
 
     post.destroy
 

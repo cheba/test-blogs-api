@@ -1,6 +1,8 @@
 class BlogsController < ApplicationController
   def index
-    blogs = Blog.all
+    blogs = Blog.accessible_by(current_ability, :read)
+
+    authorize! :read, blogs
 
     respond_to do |format|
       format.json { render json: blogs }
@@ -10,6 +12,8 @@ class BlogsController < ApplicationController
   def show
     blog = Blog.find(params[:id])
 
+    authorize! :read, blog
+
     respond_to do |format|
       format.json { render json: blog }
     end
@@ -17,6 +21,8 @@ class BlogsController < ApplicationController
 
   def create
     blog = Blog.new(blog_params)
+
+    authorize! :create, blog
 
     respond_to do |format|
       format.json do
@@ -32,6 +38,8 @@ class BlogsController < ApplicationController
   def update
     blog = Blog.find(params[:id])
 
+    authorize! :update, blog
+
     respond_to do |format|
       format.json do
         if blog.update_attributes(blog_params)
@@ -45,6 +53,8 @@ class BlogsController < ApplicationController
 
   def destroy
     blog = Blog.find(params[:id])
+
+    authorize! :destroy, blog
 
     blog.destroy
 
